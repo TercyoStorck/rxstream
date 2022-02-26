@@ -1,3 +1,2 @@
-## 0.0.1
-
-* TODO: Describe initial release.
+## [1.0.0] (Feb 26, 2022)
+- Initial release
