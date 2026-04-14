@@ -11,58 +11,39 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'RxStream Example',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const CounterPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class CounterPage extends StatefulWidget {
+  const CounterPage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CounterPage> createState() => _CounterPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final _counter = Rx<int>();
-  final _version = Rx('1.0.0');
+class _CounterPageState extends State<CounterPage> {
+  // Initialize Rx with an initial value of 0
+  final _counter = Rx<int>(0);
+
+  @override
+  void dispose() {
+    // Always close your Rx controllers when they are no longer needed
+    _counter.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      drawer: Drawer(
-        child: CustomScrollView(
-          physics: const ClampingScrollPhysics(),
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ListTile(
-                  title: StreamBuilder<String>(
-                      stream: _version.stream,
-                      initialData: '0.0.1',
-                      builder: (context, snapshot) {
-                        return Text(snapshot.data ?? '');
-                      }),
-                  leading: const Icon(Icons.logout_outlined),
-                  onTap: () {
-                    _version.add('2.0.0');
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
+        title: const Text('RxStream Counter'),
       ),
       body: Center(
         child: Column(
@@ -71,22 +52,25 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            StreamBuilder<int?>(
-                stream: _counter.stream,
-                initialData: 0,
-                builder: (context, snapshot) {
-                  return Text(
-                    '${snapshot.data}',
-                    style: Theme.of(context).textTheme.headline4,
-                  );
-                }),
+            // Use StreamBuilder to listen to changes
+            StreamBuilder<int>(
+              stream: _counter.stream,
+              initialData: _counter.value,
+              builder: (context, snapshot) {
+                return Text(
+                  '${snapshot.data}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              },
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final value = _counter.value ?? 0;
-          _counter.add(value + 1);
+          // Increment the value
+          final currentValue = _counter.value ?? 0;
+          _counter.add(currentValue + 1);
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

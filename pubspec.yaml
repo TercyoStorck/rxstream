@@ -1,6 +1,6 @@
 name: rxstream
-description: A new Flutter package project.
-version: 1.0.0
+description: A lightweight StreamController abstraction that mimics BehaviorSubject.
+version: 1.1.0
 homepage: https://github.com/TercyoStorck/
 
 environment:

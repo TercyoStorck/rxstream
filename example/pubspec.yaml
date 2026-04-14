@@ -1,25 +1,22 @@
-name: example
-description: A new Flutter project.
-
-publish_to: "none"
+name: rxstream_example
+description: An example project for the rxstream package.
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
   rxstream:
     path: ../
-  rxdart: ^0.26.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^1.0.0
 
 flutter:

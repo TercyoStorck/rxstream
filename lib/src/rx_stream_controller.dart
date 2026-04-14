@@ -19,6 +19,7 @@ class Rx<T> implements StreamController<T> {
 
   T? get value => _value;
   bool get hasError => _errorWrapper != null;
+  ErrorWrapper? get error => _errorWrapper;
 
   @override
   FutureOr<void> Function()? onCancel;
@@ -97,17 +98,3 @@ class Rx<T> implements StreamController<T> {
     };
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

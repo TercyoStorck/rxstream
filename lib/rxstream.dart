@@ -1,3 +1,3 @@
 library rxstream;
 
-export 'src/rx_strream_controller.dart';
+export 'src/rx_stream_controller.dart';
